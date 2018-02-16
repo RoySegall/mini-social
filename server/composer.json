@@ -11,7 +11,8 @@
         "kint-php/kint": "^2.2",
         "danielmewes/php-rql": "^2.3",
         "symfony/console": "^3.4",
-        "symfony/routing": "^3.4"
+        "symfony/routing": "^3.4",
+        "symfony/yaml": "^3.4"
     },
     "autoload": {
         "psr-4": {

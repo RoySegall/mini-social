@@ -19,15 +19,18 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
+// Set up the route collection.
 $routes = new RouteCollection();
-$paths = [
-  'test' => '\Social\Controller\Users',
-];
+
+// Set the paths.
+$paths = \Social\Social::parseYaml(file_get_contents('routes.yml'));
 foreach ($paths as $handler => $namespace) {
   $routes->add($handler, new Route('/' . $handler, array(
       '_controller' => $namespace . '::responseWrapper')
   ));
 }
+
+// Some stuff.
 $request = Request::createFromGlobals();
 $matcher = new UrlMatcher($routes, new RequestContext());
 $dispatcher = new EventDispatcher();
@@ -36,6 +39,9 @@ $controllerResolver = new ControllerResolver();
 $argumentResolver = new ArgumentResolver();
 $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 $response = $kernel->handle($request);
+// Fire up.
 $response->send();
+
+// Done.
 $kernel->terminate($request, $response);
 
