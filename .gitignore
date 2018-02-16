@@ -1,3 +1,4 @@
 .idea
 server/rethinkdb_data
 server/vendor/
+front/node_modules
