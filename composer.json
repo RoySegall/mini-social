@@ -9,7 +9,8 @@
     "require": {
         "symfony/http-kernel": "^3.4",
         "kint-php/kint": "^2.2",
-        "danielmewes/php-rql": "^2.3"
+        "danielmewes/php-rql": "^2.3",
+        "symfony/console": "^3.4"
     },
     "autoload": {
         "psr-4": {
