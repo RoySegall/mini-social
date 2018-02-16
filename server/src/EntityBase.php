@@ -18,11 +18,9 @@ abstract class EntityBase {
 
   /**
    * EntityBase constructor.
-   *
-   * @param \Social\RethinkDB $db\
    */
-  public function __construct(RethinkDB $db) {
-    $this->db = $db;
+  public function __construct() {
+    $this->db = Social::getDb();
   }
 
   public function createTable() {
