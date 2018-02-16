@@ -1,3 +1,3 @@
 .idea
-rethinkdb_data
-/vendor/
+server/rethinkdb_data
+server/vendor/
