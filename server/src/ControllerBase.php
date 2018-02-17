@@ -6,6 +6,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ControllerBase.
+ *
+ * Base class for all the routes.
+ *
+ * @package Social
+ */
 abstract class ControllerBase {
 
   /**
@@ -31,6 +38,7 @@ abstract class ControllerBase {
     if (!$this->access()) {
       return $this->accessDenied();
     }
+
     return new JsonResponse($this->response());
   }
 
@@ -40,7 +48,7 @@ abstract class ControllerBase {
    * @return bool
    */
   protected function access() {
-    return true;
+    return $this->getCurrentUser();
   }
 
   /**
@@ -51,6 +59,15 @@ abstract class ControllerBase {
    */
   final protected function accessDenied() {
     return new JsonResponse(['error' => 'You do not have access to this page.'], Response::HTTP_FORBIDDEN);
+  }
+
+  /**
+   * Get the current user in the request.
+   *
+   * @return \Social\Entity\User|bool
+   */
+  protected function getCurrentUser() {
+    return false;
   }
 
   /**

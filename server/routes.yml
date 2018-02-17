@@ -1,1 +1,4 @@
-users: '\Social\Controller\Users'
+'friends/show/all': '\Social\Controller\AllFriends'
+'friends/show/birthdates/previous': '\Social\Controller\ShowPreviousBirthdates'
+'friends/show/potentials': '\Social\Controller\ShowPotentials'
+'friends/show/birthdays/upcoming': '\Social\Controller\ShowPreviousUpcoming'
