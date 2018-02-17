@@ -1,0 +1,137 @@
+user:
+
+  user1:
+    username: 'admin'
+    password: 'admin'
+    email: 'god@earth.com'
+
+  user2:
+    username: 'john'
+    password: 'john'
+    email: 'john@whitehouse.gov'
+
+  user3:
+    username: 'alice'
+    password: 'alice'
+    email: 'alice@facebook.com'
+
+  user4:
+    username: 'rick'
+    password: 'rick'
+    email: 'rick@sanchez.io'
+
+  user5:
+    username: 'morty'
+    password: 'morty'
+    email: 'morty@smith.io'
+
+  user6:
+    username: 'jerry'
+    password: 'jerry'
+    email: 'jerry@smith.io'
+
+  user7:
+    username: 'summer'
+    password: 'summer'
+    email: 'summer@smith.io'
+
+  user8:
+    username: 'beth'
+    password: 'beth'
+    email: 'beth@smith.io'
+
+  user9:
+    username: 'mr.misix'
+    password: 'mrmisix'
+    email: 'mr@misix.io'
+
+  user9:
+    username: 'donald'
+    password: 'donald'
+    email: 'donald@trump.org'
+
+  user10:
+    username: 'malania'
+    password: 'malania'
+    email: 'malania@trump.org'
+
+  user11:
+    username: 'ivanka'
+    password: 'ivanka'
+    email: 'ivanka@trump.org'
+
+  user12:
+    username: 'jarrad'
+    password: 'jarrad'
+    email: 'jarrad@koshner.org'
+
+  user13:
+    username: 'sting'
+    password: 'sting'
+    email: 'sting@police.org'
+
+  user14:
+    username: 'tim'
+    password: 'tim'
+    email: 'tim@apple.com'
+
+  user15:
+    username: 'steve'
+    password: 'steve'
+    email: 'steve@apple.com'
+
+relationships:
+
+  relationship1:
+    owner: 'user1'
+    friends:
+      - 'user2'
+      - 'user3'
+      - 'user4'
+      - 'user5'
+      - 'user6'
+
+  relationship2:
+    owner: 'user2'
+    friends:
+      - 'user1'
+      - 'user3'
+      - 'user4'
+      - 'user5'
+      - 'user6'
+
+  relationship3:
+    owner: 'user3'
+    friends:
+      - 'user1'
+      - 'user2'
+      - 'user4'
+      - 'user5'
+      - 'user6'
+
+  relationship4:
+    owner: 'user4'
+    friends:
+      - 'user1'
+      - 'user2'
+      - 'user4'
+      - 'user5'
+      - 'user6'
+
+  relationship5:
+    owner: 'user5'
+    friends:
+      - 'user1'
+      - 'user2'
+      - 'user3'
+      - 'user4'
+      - 'user6'
+
+  relationship6:
+    owner: 'user6'
+    friends:
+      - 'user1'
+      - 'user2'
+      - 'user3'
+      - 'user4'
+      - 'user5'
