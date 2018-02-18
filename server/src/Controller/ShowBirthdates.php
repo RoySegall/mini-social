@@ -4,6 +4,7 @@ namespace Social\Controller;
 
 use Social\ControllerBase;
 use Social\Entity\User;
+use Social\Social;
 
 class ShowBirthdates extends ControllerBase {
 
@@ -19,7 +20,10 @@ class ShowBirthdates extends ControllerBase {
       // I should user between and let the DB to filter for me but it's not
       // working so good.
       // todo: check why.
-      return $document['birthdate'] >= time() && $document['birthdate'] <= strtotime("+2 weeks");
+      $two_weeks_timestamp = strtotime("+2 weeks");
+      $two_weeks_ranking = Social::calculateDayRank(date('m', $two_weeks_timestamp), date('d', $two_weeks_timestamp));
+
+      return $document['birth_day_rank'] >= Social::calculateDayRank() && $document['birth_day_rank'] <= $two_weeks_ranking;
     });
   }
 

@@ -24,18 +24,22 @@ class ShowPotentials extends ControllerBase {
     $query = $query->filter($row);
 
     return array_filter($user->processTableToArray($query), function($item) use($current_user) {
+      if ($item['id'] == $current_user['id']) {
+        return false;
+      }
+
       // Keep a constant for the 5 days in seconds.
       $five_days = 5 * 86400;
 
       // Check of the birth date of the item is between the user birthday and
       // 5 days ago.
       $five_days_ago =
-        ($item['birthdate'] >= ($current_user['birthdate'] - $five_days)) && $item['birthdate'] <= $current_user['birthdate'];
+        ($item['birth_day_rank'] >= ($current_user['birth_day_rank'] - $five_days)) && $item['birth_day_rank'] <= $current_user['birth_day_rank'];
 
       // Check of the birth date of the item is between the user birthday and
       // 5 days ahead.
       $five_days_ahead =
-        ($item['birthdate'] <= ($current_user['birthdate'] + $five_days)) && $item['birthdate'] >= $current_user['birthdate'];
+        ($item['birth_day_rank'] <= ($current_user['birth_day_rank'] + $five_days)) && $item['birth_day_rank'] >= $current_user['birth_day_rank'];
 
       return ($five_days_ago || $five_days_ahead) && self::sharedHobbies($current_user['hobbies'], $item['hobbies']);
     });

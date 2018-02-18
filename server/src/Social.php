@@ -37,7 +37,15 @@ class Social {
    *
    * @return int
    */
-  public static function calculateDayRank($month, $day) {
+  public static function calculateDayRank($month = NULL, $day = NULL) {
+
+    if (!$month) {
+      $month = date('m');
+    }
+
+    if (!$day) {
+      $day = date('d');
+    }
 
     // Preparing the date. Since we cannot know with math how much time passed
     // since the date we need to track how much has many days in seconds has

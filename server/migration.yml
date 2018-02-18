@@ -109,7 +109,7 @@ user:
     username: 'steve'
     password: 'steve'
     email: 'steve@apple.com'
-    birthdate: 'yesterday'
+    birthdate: '06/10/1989'
     hobbies: ['invert stuff', 'food']
 
 relationships:
