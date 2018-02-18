@@ -4,3 +4,4 @@
 'friends/show/potentials': '\Social\Controller\ShowPotentials'
 'friends/show/birthdates': '\Social\Controller\ShowBirthdates'
 'friends/show/birthdays/upcoming': '\Social\Controller\ShowUpcomingBirthdates'
+'friend/add': 'Social\Controller\AddFriend'

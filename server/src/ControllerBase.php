@@ -55,6 +55,7 @@ abstract class ControllerBase {
    * @return bool
    */
   protected function access() {
+    // Only logged users have access to the routes.
     return $this->getCurrentUser();
   }
 
