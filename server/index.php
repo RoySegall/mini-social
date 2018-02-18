@@ -34,11 +34,14 @@ foreach ($paths as $handler => $namespace) {
 $request = Request::createFromGlobals();
 $matcher = new UrlMatcher($routes, new RequestContext());
 $dispatcher = new EventDispatcher();
+
 $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 $controllerResolver = new ControllerResolver();
 $argumentResolver = new ArgumentResolver();
+
 $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 $response = $kernel->handle($request);
+
 // Fire up.
 $response->send();
 

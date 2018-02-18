@@ -2,10 +2,19 @@
 
 namespace Social;
 
+use Social\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class ControllerBase.
+ *
+ * Base class for all the routes.
+ *
+ * @package Social
+ */
 abstract class ControllerBase {
 
   /**
@@ -14,10 +23,15 @@ abstract class ControllerBase {
   protected $request;
 
   /**
+   * @var array
+   */
+  protected $user;
+
+  /**
    * ControllerBase constructor.
    */
   public function __construct() {
-    $this->request = new Request();
+    $this->request = Request::createFromGlobals();
   }
 
   /**
@@ -31,6 +45,7 @@ abstract class ControllerBase {
     if (!$this->access()) {
       return $this->accessDenied();
     }
+
     return new JsonResponse($this->response());
   }
 
@@ -40,7 +55,7 @@ abstract class ControllerBase {
    * @return bool
    */
   protected function access() {
-    return true;
+    return $this->getCurrentUser();
   }
 
   /**
@@ -51,6 +66,30 @@ abstract class ControllerBase {
    */
   final protected function accessDenied() {
     return new JsonResponse(['error' => 'You do not have access to this page.'], Response::HTTP_FORBIDDEN);
+  }
+
+  /**
+   * Get the current user in the request.
+   *
+   * @return \Social\Entity\User|bool
+   */
+  protected function getCurrentUser() {
+    $user = new User();
+
+    if (!$this->user = $user->load($this->request->headers->get('uid'))) {
+      return false;
+    }
+
+    return $this->user;
+  }
+
+  /**
+   * Trow a bad request.
+   *
+   * @param $message
+   */
+  protected function badRequest($message) {
+    throw new HttpException(Response::HTTP_BAD_REQUEST, $message);
   }
 
   /**

@@ -28,6 +28,15 @@ abstract class EntityBase {
   }
 
   /**
+   * Get the connection object.
+   *
+   * @return \r\Connection
+   */
+  public function getConnection() {
+    return $this->db->getConnection();
+  }
+
+  /**
    * Get the table handler.
    *
    * @return \r\Queries\Tables\Table
@@ -68,9 +77,13 @@ abstract class EntityBase {
    * @return mixed
    */
   public function load($id) {
-    $table = $this->db->getTable($this->table);
+    $results = $this->db->getTable($this->table)->get($id)->run($this->db->getConnection());
 
-    return $table->get($id)->run($this->db->getConnection())->getIterator()->getArrayCopy();
+    if (!$results) {
+      return false;
+    }
+
+    return $results->getIterator()->getArrayCopy();
   }
 
   /**
@@ -92,9 +105,30 @@ abstract class EntityBase {
       $query = $query->filter($row);
     }
 
+    return $this->processTableToArray($query);
+  }
+
+  /**
+   * @param $query
+   *
+   * @return array
+   */
+  public function processTableToArray($query) {
     return array_map(function($item) {
-      return $item->getArrayCopy();
+      return $this->massageElement($item->getArrayCopy());
     }, $query->run($this->db->getConnection())->toArray());
+  }
+
+  /**
+   * Massage a single item to whatever we need - change date or add some values.
+   *
+   * @param $item
+   *   The item to process.
+   *
+   * @return mixed
+   */
+  protected function massageElement($item) {
+    return $item;
   }
 
   /**
@@ -134,6 +168,22 @@ abstract class EntityBase {
     }
 
     $query->delete()->run($this->db->getConnection());
+  }
+
+  /**
+   * Process results to array.
+   *
+   * @param \stdClass $cursor
+   *   The cursor object.
+   *
+   * @return mixed
+   */
+  static public function processCursor(\stdClass $cursor) {
+    if (method_exists($cursor, 'getIterator')) {
+      return $cursor->getIterator()->getArrayCopy();
+    }
+
+    return $cursor->toArray();
   }
 
 }
