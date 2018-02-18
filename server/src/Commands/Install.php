@@ -3,7 +3,6 @@
 namespace Social\Commands;
 
 use Social\Entity\Logs;
-use Social\Entity\Relationships;
 use Social\Entity\User;
 use Social\EntityBase;
 use Social\Social;
@@ -45,7 +44,6 @@ class Install extends Command {
     $this->entities = [
       'user' => new User(),
       'logs' => new Logs(),
-      'relationships' => new Relationships(),
     ];
   }
 
@@ -106,7 +104,7 @@ class Install extends Command {
     $assets = Social::parseYaml(file_get_contents('migration.yml'));
 
     foreach ($migrations as $entity => $callback) {
-      $this->{$callback}($this->entities[$entity], $assets[$entity]);
+      $this->{$callback}($this->entities['user'], $assets[$entity]);
     }
   }
 
@@ -123,8 +121,9 @@ class Install extends Command {
     $imported_users = [];
 
     foreach ($users as $key => $_user) {
+      $_user['password'] = hash('sha512', $_user['password']);
       $result = $user->save($_user);
-      $this->usersMapping[$key] = ['id' => $result['id'], 'name' => $_user['username']];
+      $this->usersMapping[$key] = $result;
       $imported_users[] = $_user['username'];
     }
 
@@ -134,27 +133,26 @@ class Install extends Command {
   /**
    * Import relationships of users.
    *
-   * @param \Social\Entity\Relationships $relationship
-   *   The relationship entity object.
+   * @param \Social\Entity\User $user
+   *   The user entity object.
    *
    * @param array $relationships
    *   List of relationships.
    */
-  protected function relationshipImport(Relationships $relationship, array $relationships) {
+  protected function relationshipImport(User $user, array $relationships) {
 
     $created_relationships = [];
 
-    foreach ($relationships as $_relationship) {
-      $mapped_user = $this->usersMapping[$_relationship['owner']];
+    foreach ($relationships as $relationship) {
+      $mapped_user = $this->usersMapping[$relationship['owner']];
 
-      $relationship->save([
-        'user' => $mapped_user['id'],
-        'friends' => array_map(function($item) {
-          return $this->usersMapping[$item]['id'];
-        }, $_relationship['friends']),
-      ]);
+      $mapped_user['friends'] = array_map(function($item) {
+        return $this->usersMapping[$item]['id'];
+      }, $relationship['friends']);
 
-      $created_relationships[] = $mapped_user['name'];
+      $user->update($mapped_user);
+
+      $created_relationships[] = $mapped_user['username'];
     }
 
     $this->io->success('Relationship for users ' . implode(', ', $created_relationships) . ' has created in the DB.');
