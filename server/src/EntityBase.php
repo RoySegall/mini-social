@@ -115,8 +115,20 @@ abstract class EntityBase {
    */
   public function processTableToArray($query) {
     return array_map(function($item) {
-      return $item->getArrayCopy();
+      return $this->massageElement($item->getArrayCopy());
     }, $query->run($this->db->getConnection())->toArray());
+  }
+
+  /**
+   * Massage a single item to whatever we need - change date or add some values.
+   *
+   * @param $item
+   *   The item to process.
+   *
+   * @return mixed
+   */
+  protected function massageElement($item) {
+    return $item;
   }
 
   /**
