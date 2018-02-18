@@ -105,6 +105,15 @@ abstract class EntityBase {
       $query = $query->filter($row);
     }
 
+    return $this->processTableToArray($query);
+  }
+
+  /**
+   * @param $query
+   *
+   * @return array
+   */
+  public function processTableToArray($query) {
     return array_map(function($item) {
       return $item->getArrayCopy();
     }, $query->run($this->db->getConnection())->toArray());

@@ -4,19 +4,19 @@ user:
     username: 'admin'
     password: 'admin'
     email: 'god@earth.com'
-    birthdate: '1/1/2018'
+    birthdate: '+1 weeks'
 
   user2:
     username: 'john'
     password: 'john'
     email: 'john@whitehouse.gov'
-    birthdate: '1/2/2018'
+    birthdate: '+2 days'
 
   user3:
     username: 'alice'
     password: 'alice'
     email: 'alice@facebook.com'
-    birthdate: '1/15/2018'
+    birthdate: '+2 months'
 
   user4:
     username: 'rick'
@@ -28,13 +28,13 @@ user:
     username: 'morty'
     password: 'morty'
     email: 'morty@smith.io'
-    birthdate: '6/25/2018'
+    birthdate: '+5 months'
 
   user6:
     username: 'jerry'
     password: 'jerry'
     email: 'jerry@smith.io'
-    birthdate: '09/09/2017'
+    birthdate: '+3 days'
 
 
   user7:
