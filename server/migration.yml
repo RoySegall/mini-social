@@ -5,97 +5,112 @@ user:
     password: 'admin'
     email: 'god@earth.com'
     birthdate: '+1 weeks'
+    hobbies: ['plants', 'animals', 'twilight', 'music', 'food']
 
   user2:
     username: 'john'
     password: 'john'
     email: 'john@whitehouse.gov'
     birthdate: '+2 days'
+    hobbies: ['cars', 'USA', 'norma jean', 'space', 'food']
 
   user3:
     username: 'alice'
     password: 'alice'
     email: 'alice@facebook.com'
     birthdate: '+2 months'
+    hobbies: ['cats', 'tea', 'watches', 'food']
 
   user4:
     username: 'rick'
     password: 'rick'
     email: 'rick@sanchez.io'
     birthdate: '6/15/2018'
+    hobbies: ['morty', 'hate jerry', 'invert stuff', 'drinking', 'food']
 
   user5:
     username: 'morty'
     password: 'morty'
     email: 'morty@smith.io'
     birthdate: '+5 months'
+    hobbies: ['rick', 'save the earth', 'food', 'seeds in the ass', 'food']
 
   user6:
     username: 'jerry'
     password: 'jerry'
     email: 'jerry@smith.io'
     birthdate: '+3 days'
-
+    hobbies: ['food', 'unemployed', 'beth']
 
   user7:
     username: 'summer'
     password: 'summer'
     email: 'summer@smith.io'
     birthdate: '09/09/2018'
+    hobbies: ['beth', 'food', 'rick', 'boys']
 
   user8:
     username: 'beth'
     password: 'beth'
     email: 'beth@smith.io'
     birthdate: '09/09/2018'
+    hobbies: ['jerry', 'food']
 
   user9:
     username: 'mr.misix'
     password: 'mrmisix'
     email: 'mr@misix.io'
     birthdate: '09/09/2018'
+    hobbies: ['jump out of boxes', 'make request happens', 'food']
 
   user9:
     username: 'donald'
     password: 'donald'
     email: 'donald@trump.org'
-    birthdate: '09/09/2018'
+    birthdate: '6/15/2018'
+    hobbies: ['fake news', 'twitter', 'ivanka', 'malania']
 
   user10:
     username: 'malania'
     password: 'malania'
     email: 'malania@trump.org'
-    birthdate: '09/09/2018'
+    birthdate: '6/15/2018'
+    hobbies: ['donald', 'ivanka', 'food']
 
   user11:
     username: 'ivanka'
     password: 'ivanka'
     email: 'ivanka@trump.org'
-    birthdate: '09/09/2018'
+    birthdate: '6/20/2018'
+    hobbies: ['food', 'dad']
 
   user12:
     username: 'jarrad'
     password: 'jarrad'
     email: 'jarrad@koshner.org'
-    birthdate: '09/09/2018'
+    birthdate: '6/26/2018'
+    hobbies: ['morty']
 
   user13:
     username: 'sting'
     password: 'sting'
     email: 'sting@police.org'
-    birthdate: '09/09/2018'
+    birthdate: '6/22/2018'
+    hobbies: ['Jerusalem', 'foo']
 
   user14:
     username: 'tim'
     password: 'tim'
     email: 'tim@apple.com'
-    birthdate: '09/09/2018'
+    birthdate: '6/12/2018'
+    hobbies: ['invert stuff', 'food']
 
   user15:
     username: 'steve'
     password: 'steve'
     email: 'steve@apple.com'
-    birthdate: '09/09/2018'
+    birthdate: '6/10/2018'
+    hobbies: ['invert stuff', 'food']
 
 relationships:
 

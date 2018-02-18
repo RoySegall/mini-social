@@ -5,7 +5,7 @@ namespace Social\Controller;
 use Social\ControllerBase;
 use Social\Entity\User;
 
-class AllFriends extends ControllerBase {
+class ShowBirthdates extends ControllerBase {
 
   /**
    * {@inheritdoc}
@@ -13,7 +13,14 @@ class AllFriends extends ControllerBase {
   public function response() {
     $user = new User();
 
-    return $user->loadMultiple($this->user['friends']);
+    $friends = $user->loadMultiple($this->getFriendsOfFriends($user, $this->user['friends']));
+
+    return array_filter($friends, function($document) {
+      // I should user between and let the DB to filter for me but it's not
+      // working so good.
+      // todo: check why.
+      return $document['birthdate'] >= time() && $document['birthdate'] <= strtotime("+2 weeks");
+    });
   }
 
   /**
@@ -53,5 +60,4 @@ class AllFriends extends ControllerBase {
 
     return $friends_ids;
   }
-
 }
