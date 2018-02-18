@@ -8,6 +8,7 @@ use Social\EntityBase;
 use Social\Social;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -54,7 +55,8 @@ class Install extends Command {
     $this
       ->setName('social:install')
       ->setDescription('Install Mini social')
-      ->setHelp('Set up the mini social stuff');
+      ->setHelp('Set up the mini social stuff')
+      ->addOption('migrate_only', 'mo', InputOption::VALUE_OPTIONAL, 'Define if need only to remigrate content.', FALSE);
   }
 
   /**
@@ -63,7 +65,10 @@ class Install extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $this->io = new SymfonyStyle($input, $output);
 
-    $this->setUpDb();
+    if (!$input->getOption('migrate_only')) {
+      $this->setUpDb();
+    }
+
     $this->migrateData();
   }
 
@@ -121,8 +126,14 @@ class Install extends Command {
     $imported_users = [];
 
     foreach ($users as $key => $_user) {
+      // Process values from the migration file.
       $_user['password'] = User::hashPassword($_user['password']);
+      $_user['birthdate'] = strtotime($_user['birthdate']);
+
+      // Saving the user.
       $result = $user->save($_user);
+
+      // Saved data for later usage.
       $this->usersMapping[$key] = $result;
       $imported_users[] = $_user['username'];
     }
@@ -143,6 +154,7 @@ class Install extends Command {
 
     $created_relationships = [];
 
+    // Updating the user with the relationships.
     foreach ($relationships as $relationship) {
       $mapped_user = $this->usersMapping[$relationship['owner']];
 

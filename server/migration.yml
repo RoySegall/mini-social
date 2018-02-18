@@ -4,81 +4,98 @@ user:
     username: 'admin'
     password: 'admin'
     email: 'god@earth.com'
+    birthdate: '1/1/2018'
 
   user2:
     username: 'john'
     password: 'john'
     email: 'john@whitehouse.gov'
+    birthdate: '1/2/2018'
 
   user3:
     username: 'alice'
     password: 'alice'
     email: 'alice@facebook.com'
+    birthdate: '1/15/2018'
 
   user4:
     username: 'rick'
     password: 'rick'
     email: 'rick@sanchez.io'
+    birthdate: '6/15/2018'
 
   user5:
     username: 'morty'
     password: 'morty'
     email: 'morty@smith.io'
+    birthdate: '6/25/2018'
 
   user6:
     username: 'jerry'
     password: 'jerry'
     email: 'jerry@smith.io'
+    birthdate: '09/09/2017'
+
 
   user7:
     username: 'summer'
     password: 'summer'
     email: 'summer@smith.io'
+    birthdate: '09/09/2018'
 
   user8:
     username: 'beth'
     password: 'beth'
     email: 'beth@smith.io'
+    birthdate: '09/09/2018'
 
   user9:
     username: 'mr.misix'
     password: 'mrmisix'
     email: 'mr@misix.io'
+    birthdate: '09/09/2018'
 
   user9:
     username: 'donald'
     password: 'donald'
     email: 'donald@trump.org'
+    birthdate: '09/09/2018'
 
   user10:
     username: 'malania'
     password: 'malania'
     email: 'malania@trump.org'
+    birthdate: '09/09/2018'
 
   user11:
     username: 'ivanka'
     password: 'ivanka'
     email: 'ivanka@trump.org'
+    birthdate: '09/09/2018'
 
   user12:
     username: 'jarrad'
     password: 'jarrad'
     email: 'jarrad@koshner.org'
+    birthdate: '09/09/2018'
 
   user13:
     username: 'sting'
     password: 'sting'
     email: 'sting@police.org'
+    birthdate: '09/09/2018'
 
   user14:
     username: 'tim'
     password: 'tim'
     email: 'tim@apple.com'
+    birthdate: '09/09/2018'
 
   user15:
     username: 'steve'
     password: 'steve'
     email: 'steve@apple.com'
+    birthdate: '09/09/2018'
 
 relationships:
 
