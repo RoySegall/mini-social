@@ -2,7 +2,6 @@
 
 namespace Social;
 
-use r\Cursor;
 use r\ValuedQuery\RVar;
 
 abstract class EntityBase {
