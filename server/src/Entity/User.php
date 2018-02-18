@@ -30,7 +30,6 @@ class User extends EntityBase {
    * @return mixed
    */
   protected function massageElement($item) {
-    $item['birthdate'] = date("m/d/Y" , $item['birthdate']);
     $item['time'] = date("m/d/Y" , $item['time']);
     return $item;
   }

@@ -128,7 +128,20 @@ class Install extends Command {
     foreach ($users as $key => $_user) {
       // Process values from the migration file.
       $_user['password'] = User::hashPassword($_user['password']);
-      $_user['birthdate'] = strtotime($_user['birthdate']);
+
+      if (strpos($_user['birthdate'], '/') === false) {
+        $_user['birthdate'] = date("m/d/Y", strtotime($_user['birthdate']));
+      }
+
+      list($month, $day, $year) = explode('/', $_user['birthdate']);
+
+      if ($year == date("Y")) {
+        $year = $year - 27;
+        $_user['birthdate'] = "{$month}/{$day}/{$year}";
+      }
+
+      $_user['birth_day_rank'] = Social::calculateDayRank($month, $day);
+      $_user['birth_year'] = $year;
 
       // Saving the user.
       $result = $user->save($_user);
