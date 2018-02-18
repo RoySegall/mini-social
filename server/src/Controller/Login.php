@@ -8,7 +8,11 @@ use Social\EntityBase;
 
 class Login extends ControllerBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected function access() {
+    // Everyone should have access to the login page.
     return true;
   }
 
