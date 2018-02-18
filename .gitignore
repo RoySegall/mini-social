@@ -1,4 +1,5 @@
 .idea
 server/rethinkdb_data
 server/vendor/
+server/failed_logs.log
 front/node_modules
