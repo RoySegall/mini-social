@@ -32,10 +32,13 @@ class Social {
   /**
    * Calculating how much time has passed since the the begining of the year.
    *
-   * @param $month
-   * @param $day
+   * @param string $month
+   *   The month in the year. Need to be in [01, 02, 09,...] formats.s
+   * @param integer $day
+   *   The day in the month.
    *
    * @return int
+   *   Special day ranking.
    */
   public static function calculateDayRank($month = NULL, $day = NULL) {
 
