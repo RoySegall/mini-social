@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <header>
-      <router-link :to="{ name: 'home'}">Vue.js PWA</router-link>
+      <router-link :to="{ name: 'home'}">Mini social</router-link>
     </header>
     <main>
-      <img src="./assets/images/logo.png" alt="Vue.js PWA">
       <router-view></router-view>
     </main>
   </div>

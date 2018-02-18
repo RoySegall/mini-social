@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'counter',
+  name: 'homepage',
   computed: {
     count() {
       return this.$store.state.count;
