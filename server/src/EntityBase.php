@@ -78,9 +78,13 @@ abstract class EntityBase {
    * @return mixed
    */
   public function load($id) {
-    $table = $this->db->getTable($this->table);
+    $results = $this->db->getTable($this->table)->get($id)->run($this->db->getConnection());
 
-    return $table->get($id)->run($this->db->getConnection())->getIterator()->getArrayCopy();
+    if (!$results) {
+      return false;
+    }
+
+    return $results->getIterator()->getArrayCopy();
   }
 
   /**
@@ -149,12 +153,12 @@ abstract class EntityBase {
   /**
    * Process results to array.
    *
-   * @param Cursor $cursor
+   * @param \stdClass $cursor
    *   The cursor object.
    *
    * @return mixed
    */
-  static public function processCursor(Cursor $cursor) {
+  static public function processCursor(\stdClass $cursor) {
     if (method_exists($cursor, 'getIterator')) {
       return $cursor->getIterator()->getArrayCopy();
     }

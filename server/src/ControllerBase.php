@@ -2,6 +2,7 @@
 
 namespace Social;
 
+use Social\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +23,15 @@ abstract class ControllerBase {
   protected $request;
 
   /**
+   * @var array
+   */
+  protected $user;
+
+  /**
    * ControllerBase constructor.
    */
   public function __construct() {
-    $this->request = new Request();
+    $this->request = Request::createFromGlobals();
   }
 
   /**
@@ -68,7 +74,13 @@ abstract class ControllerBase {
    * @return \Social\Entity\User|bool
    */
   protected function getCurrentUser() {
-    return false;
+    $user = new User();
+
+    if (!$this->user = $user->load($this->request->headers->get('uid'))) {
+      return false;
+    }
+
+    return $this->user;
   }
 
   /**
