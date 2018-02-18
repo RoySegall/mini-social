@@ -2,6 +2,7 @@
 
 namespace Social;
 
+use r\Cursor;
 use r\ValuedQuery\RVar;
 
 abstract class EntityBase {
@@ -25,6 +26,15 @@ abstract class EntityBase {
 
   public function createTable() {
     return $this->db->createTable($this->table);
+  }
+
+  /**
+   * Get the connection object.
+   *
+   * @return \r\Connection
+   */
+  public function getConnection() {
+    return $this->db->getConnection();
   }
 
   /**
@@ -134,6 +144,22 @@ abstract class EntityBase {
     }
 
     $query->delete()->run($this->db->getConnection());
+  }
+
+  /**
+   * Process results to array.
+   *
+   * @param Cursor $cursor
+   *   The cursor object.
+   *
+   * @return mixed
+   */
+  static public function processCursor(Cursor $cursor) {
+    if (method_exists($cursor, 'getIterator')) {
+      return $cursor->getIterator()->getArrayCopy();
+    }
+
+    return $cursor->toArray();
   }
 
 }

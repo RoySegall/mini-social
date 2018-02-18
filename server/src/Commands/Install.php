@@ -121,7 +121,7 @@ class Install extends Command {
     $imported_users = [];
 
     foreach ($users as $key => $_user) {
-      $_user['password'] = hash('sha512', $_user['password']);
+      $_user['password'] = User::hashPassword($_user['password']);
       $result = $user->save($_user);
       $this->usersMapping[$key] = $result;
       $imported_users[] = $_user['username'];

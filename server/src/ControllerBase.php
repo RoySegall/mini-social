@@ -5,6 +5,7 @@ namespace Social;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class ControllerBase.
@@ -68,6 +69,15 @@ abstract class ControllerBase {
    */
   protected function getCurrentUser() {
     return false;
+  }
+
+  /**
+   * Trow a bad request.
+   *
+   * @param $message
+   */
+  protected function badRequest($message) {
+    throw new HttpException(Response::HTTP_BAD_REQUEST, $message);
   }
 
   /**
