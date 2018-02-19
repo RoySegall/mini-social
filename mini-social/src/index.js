@@ -10,4 +10,24 @@ if (window.localStorage.getItem('uid') == null) {
 else {
     ReactDOM.render(<Homepage />, document.getElementById('root'));
 }
+
+
+// class AppComponent extends Component {
+//   state() {
+//
+//   }
+//
+//   componentDidMount() {
+//     registerServiceWorker();
+//   }
+//
+//   render() {
+//     if (window.localStorage.getItem('uid') == null) {
+//       return <Login />;
+//     }
+//     else {
+//       return <Homepage />;
+//     }
+//   }
+// }
 registerServiceWorker();

@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import './Login.css';
 import * as axios from "axios";
-import settings from './settings';
+import * as request from "request"
+// import settings from './settings';
 
 class Login extends Component {
 
   constructor(props) {
     super(props);
 
-    this.errors = "A";
+    this.errors = "";
 
     this.state = {
       username: '',
@@ -60,16 +61,13 @@ class Login extends Component {
     }
 
     if (errors.length == 0) {
-      axios.
-        post(settings.backend + "/login", {
-          'username': this.state.username,
-          'password': this.state.password,
+      axios.post("http://localhost/mini-social/server/login?XDEBUG_SESSION_START=11004",
+        "username=" + this.state.username + "&password=" + this.state.password)
+        .catch(function(error) {
+          obj.setState({errors: error.response.data.error + "."});
         })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
+        .then(function(response){
+          console.log('saved successfully')
         });
     }
 

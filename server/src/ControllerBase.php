@@ -42,11 +42,25 @@ abstract class ControllerBase {
    */
   public function responseWrapper() {
 
-    if (!$this->access()) {
-      return $this->accessDenied();
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Headers: Authorization, access_token, access-token, Content-Type, permission');
+    header('Access-Control-Allow-Methods: *');
+
+//    if (!$this->access()) {
+//      return $this->accessDenied();
+//    }
+
+    try {
+      $content = $this->response();
+      $code = 200;
+    } catch (HttpException $e) {
+      $content = ['error' => $e->getMessage()];
+      $code = Response::HTTP_UNAUTHORIZED;
     }
 
-    return new JsonResponse($this->response());
+    $response = new JsonResponse($content, $code);
+    return $response;
   }
 
   /**
