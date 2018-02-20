@@ -11,7 +11,7 @@ class AddFriend extends ControllerBase {
    * {@inheritdoc}
    */
   public function response() {
-    $data = json_decode($this->request->getContent());
+    $data = $this->processPayload();
 
     if (empty($data->friend_id)) {
       $this->badRequest('The friend_id is missing in the request.');
