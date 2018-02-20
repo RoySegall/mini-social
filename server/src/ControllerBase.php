@@ -47,9 +47,9 @@ abstract class ControllerBase {
     header('Access-Control-Allow-Headers: Authorization, access_token, access-token, Content-Type, permission');
     header('Access-Control-Allow-Methods: *');
 
-//    if (!$this->access()) {
-//      return $this->accessDenied();
-//    }
+    if (!$this->access()) {
+      return $this->accessDenied();
+    }
 
     try {
       $content = $this->response();
@@ -60,6 +60,7 @@ abstract class ControllerBase {
     }
 
     $response = new JsonResponse($content, $code);
+//    $response->headers->set('Access-Control-Allow-Origin', '*');
     return $response;
   }
 
@@ -105,6 +106,19 @@ abstract class ControllerBase {
    */
   protected function badRequest($message) {
     throw new HttpException(Response::HTTP_BAD_REQUEST, $message);
+  }
+
+  protected function processPayload() {
+    if ($content = $this->request->getContent()) {
+      return json_decode($content);
+    }
+
+    if (!empty($_POST)) {
+      return (object)$_POST;
+    }
+
+    // todo: file_get_contents('php://input')
+
   }
 
   /**
