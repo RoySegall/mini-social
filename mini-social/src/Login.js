@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import './Login.css';
 import * as axios from "axios";
-import * as request from "request"
-// import settings from './settings';
+import settings from './settings';
 
 class Login extends Component {
 
@@ -61,17 +60,20 @@ class Login extends Component {
     }
 
     if (errors.length == 0) {
-      axios.post("http://localhost/mini-social/server/login?XDEBUG_SESSION_START=11004",
+      axios.post(settings.backend + "/login",
         "username=" + this.state.username + "&password=" + this.state.password)
-        .catch(function(error) {
-          obj.setState({errors: error.response.data.error + "."});
+        .then(function(response) {
+          window.localStorage.setItem('uid', response.data.id);
+          window.location.reload();
         })
-        .then(function(response){
-          console.log('saved successfully')
+        .catch(function(error) {
+          if (error.response !== undefined) {
+            obj.setState({errors: error.response.data.error});
+          }
         });
     }
 
-    obj.setState({errors: errors.join(", ") + "."});
+    obj.setState({errors: errors.join(", ")});
   }
 }
 

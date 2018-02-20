@@ -22,7 +22,7 @@ class Login extends ControllerBase {
    * {@inheritdoc}
    */
   public function response() {
-    $data = json_decode($this->request->getContent());
+    $data = $this->processPayload();
 
     if (empty($data->username) || empty($data->password)) {
       $this->badRequest('username and password are missing');
@@ -35,7 +35,7 @@ class Login extends ControllerBase {
       ->filter((array) $data)
       ->run($user->getConnection());
 
-    if (!$results->toArray()) {
+    if (!$users = $results->toArray()) {
       // Writing to the log.
       $this->logFailedLogin($data->username);
       $this->badRequest('No username was found. Try again later.');
@@ -44,7 +44,7 @@ class Login extends ControllerBase {
     // we should create an access token but for the lack of time we won't do
     // that.
     // todo: create access token.
-    return EntityBase::processCursor($results);
+    return $users[0]->getArrayCopy();
   }
 
   /**

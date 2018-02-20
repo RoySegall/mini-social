@@ -60,7 +60,6 @@ abstract class ControllerBase {
     }
 
     $response = new JsonResponse($content, $code);
-//    $response->headers->set('Access-Control-Allow-Origin', '*');
     return $response;
   }
 
@@ -108,17 +107,34 @@ abstract class ControllerBase {
     throw new HttpException(Response::HTTP_BAD_REQUEST, $message);
   }
 
+  /**
+   * Processing the payload.
+   *
+   * @return mixed|object
+   *   Return the payload as an object.
+   */
   protected function processPayload() {
-    if ($content = $this->request->getContent()) {
-      return json_decode($content);
+    $content = $this->request->getContent();
+
+    if ($decode = json_decode($content)) {
+      return $decode;
+    }
+
+    if ($input = file_get_contents('php://input')) {
+      $body = [];
+
+      parse_str($input, $body);
+
+      if ($body) {
+        return (object) $body;
+      }
     }
 
     if (!empty($_POST)) {
-      return (object)$_POST;
+      return (object) $_POST;
     }
 
-    // todo: file_get_contents('php://input')
-
+    return NULL;
   }
 
   /**
