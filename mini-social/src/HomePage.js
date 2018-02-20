@@ -1,23 +1,34 @@
 import React, {Component} from 'react';
-import './Login.css';
-import settings from 'settings';
+import './Homepage.css';
+import settings from './settings';
 
 class Login extends Component {
 
     constructor() {
         super();
+
+        this.state= {
+            results: <h2>Hello there! Please do something with the buttons on the left.</h2>
+        };
+    }
+
+    showAllFriends() {
         let friends = ['a', 'b', 'bar'];
-        this.name = <ul>{friends.map((item) => <li>{item}</li>)}</ul>;
+        this.setState({results: <ul>{friends.map((item) => <li>{item}</li>)}</ul>});
     }
 
     render() {
         return (
             <div className="Homepage">
-                <button>Show all friends</button>
-                <button>Show birthdays</button>
-                <button>Show potentials friends</button>
-                <button>Show upcoming birthdays</button>
-                {this.name}
+                <div className="first">
+                    <button className="actions" onClick={this.showAllFriends}>Show all friends</button>
+                    <button className="actions">Show birthdays</button>
+                    <button className="actions">Show potentials friends</button>
+                    <button className="actions">Show upcoming birthdays</button>
+                </div>
+                <div className="last">
+                    {this.state.results}
+                </div>
             </div>
         );
     }
