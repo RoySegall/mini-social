@@ -1,33 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login';
 import Homepage from './HomePage';
 import registerServiceWorker from './registerServiceWorker';
 
-if (window.localStorage.getItem('uid') == null) {
-    ReactDOM.render(<Login />, document.getElementById('root'));
-}
-else {
-    ReactDOM.render(<Homepage />, document.getElementById('root'));
+class AppComponent extends Component {
+
+  componentDidMount() {
+    registerServiceWorker();
+  }
+
+  render() {
+    if (window.localStorage.getItem('uid') == null) {
+      return <Login />;
+    }
+    else {
+      return <Homepage />;
+    }
+  }
 }
 
-
-// class AppComponent extends Component {
-//   state() {
-//
-//   }
-//
-//   componentDidMount() {
-//     registerServiceWorker();
-//   }
-//
-//   render() {
-//     if (window.localStorage.getItem('uid') == null) {
-//       return <Login />;
-//     }
-//     else {
-//       return <Homepage />;
-//     }
-//   }
-// }
-registerServiceWorker();
+ReactDOM.render(<AppComponent />, document.getElementById('root'));

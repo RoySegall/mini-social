@@ -8,11 +8,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.errors = "";
-
     this.state = {
       username: '',
       password: '',
+      errors: [],
     }
   }
 

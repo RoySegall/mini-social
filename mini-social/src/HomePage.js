@@ -5,7 +5,10 @@ class Login extends Component {
   render() {
     return (
       <div className="Homepage">
-          Homepage
+          <button>Show all friends</button>
+          <button>Show birthdays</button>
+          <button>Show potentials friends</button>
+          <button>Show upcoming birthdays</button>
       </div>
     );
   }
