@@ -28,6 +28,55 @@ abstract class ControllerBase {
   protected $user;
 
   /**
+   * @var string
+   */
+  protected $uid;
+
+  /**
+   * @var \stdClass
+   */
+  protected $payload;
+
+  /**
+   * @return string
+   */
+  public function getUid() {
+    return $this->uid;
+  }
+
+  /**
+   * Set the user ID fo the user.
+   *
+   * @param string $uid
+   *   The user ID.
+   *
+   * @return ControllerBase
+   */
+  public function setUid($uid) {
+    $this->uid = $uid;
+
+    if (!$this->user) {
+      $this->getCurrentUser();
+    }
+
+    return $this;
+  }
+
+  /**
+   * Set the payload.
+   *
+   * @param array $payload
+   *   The object.
+   *
+   * @return ControllerBase
+   */
+  public function setPayload(array $payload) {
+    $this->payload = (object) $payload;
+
+    return $this;
+  }
+
+  /**
    * ControllerBase constructor.
    */
   public function __construct() {
@@ -42,11 +91,6 @@ abstract class ControllerBase {
    */
   public function responseWrapper() {
 
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Content-Type, uid, Authorization');
-    header('Access-Control-Allow-Methods: *');
-
     if (!$this->access()) {
       return $this->accessDenied();
     }
@@ -60,6 +104,12 @@ abstract class ControllerBase {
     }
 
     $response = new JsonResponse($content, $code);
+
+    $response->headers->set('Access-Control-Allow-Origin', '*');
+    $response->headers->set('Access-Control-Allow-Credentials', 'true');
+    $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, uid, Authorization');
+    $response->headers->set('Access-Control-Allow-Methods', '*');
+
     return $response;
   }
 
@@ -91,8 +141,13 @@ abstract class ControllerBase {
   protected function getCurrentUser() {
     $user = new User();
 
-    if (!$uid = $this->request->headers->get('uid')) {
-      $uid = !empty($_GET['uid']) ? $_GET['uid'] : '';
+    if ($this->uid) {
+      $uid = $this->uid;
+    }
+    else {
+      if (!$uid = $this->request->headers->get('uid')) {
+        $uid = !empty($_GET['uid']) ? $_GET['uid'] : '';
+      }
     }
 
     if (!$this->user = $user->load($uid)) {
@@ -118,6 +173,11 @@ abstract class ControllerBase {
    *   Return the payload as an object.
    */
   protected function processPayload() {
+
+    if ($this->payload) {
+      return $this->payload;
+    }
+
     $content = $this->request->getContent();
 
     if ($decode = json_decode($content)) {

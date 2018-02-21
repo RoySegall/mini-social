@@ -60,12 +60,14 @@ class Login extends ControllerBase {
       'ip' => $this->request->server->get("REMOTE_ADDR"),
     ];
 
+    $logs->save($document);
+
     $results = $logs
       ->getTable()
       ->filter($document)
       ->run($logs->getConnection());
 
-    if (count($results->toArray()) >= 5) {
+    if (count($results->toArray()) == 5) {
       // Write to the log.
       $data = [
         'ip' => $this->request->server->get("REMOTE_ADDR"),
@@ -76,8 +78,5 @@ class Login extends ControllerBase {
       $fs = new Filesystem();
       $fs->appendToFile('failed_logs.log', $string);
     }
-
-    $logs->save($document);
   }
-
 }

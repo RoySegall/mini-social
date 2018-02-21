@@ -1,4 +1,6 @@
-# Mini socila
+[![Build Status](https://travis-ci.org/RoySegall/mini-social.svg?branch=master)](https://travis-ci.org/RoySegall/mini-social)
+
+# Mini social.
 
 Welcome to the mini social project. A home task.
 
@@ -36,3 +38,15 @@ php -S localhost:8081
 ```
 
 That's it. Now you can enjoy with a slice of :pizza: and :pineapple:
+
+## Tests
+
+In order to run tests you'll need phpunit:
+```php
+compsoer instal --dev
+```
+
+Running the tests is easy:
+```bash
+bash tests.php
+```
