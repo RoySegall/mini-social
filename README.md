@@ -37,6 +37,11 @@ The last thing is to get the backend up and running:
 php -S localhost:8081
 ```
 
+In order to see failing login attempts in live just run
+```bash
+php console.php social:login_attempts
+```
+
 That's it. Now you can enjoy with a slice of :pizza: and :pineapple:
 
 ### Tests
