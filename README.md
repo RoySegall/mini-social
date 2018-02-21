@@ -74,7 +74,7 @@ That's it.
 
 The list of users is in `server/migratoins.yml`
 
-_Optional:_ By default, the backend run at http://localhost:8081 you can change
-the address of the backend in `src/settings.php`
+_Optional:_ By default, the backend is mapped to http://localhost:8081 you can 
+change the address in `src/settings.php`
 
 
