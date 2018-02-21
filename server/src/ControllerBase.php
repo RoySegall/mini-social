@@ -44,7 +44,7 @@ abstract class ControllerBase {
 
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Authorization, access_token, access-token, Content-Type, permission');
+    header('Access-Control-Allow-Headers: Content-Type, uid, Authorization');
     header('Access-Control-Allow-Methods: *');
 
     if (!$this->access()) {
@@ -91,7 +91,11 @@ abstract class ControllerBase {
   protected function getCurrentUser() {
     $user = new User();
 
-    if (!$this->user = $user->load($this->request->headers->get('uid'))) {
+    if (!$uid = $this->request->headers->get('uid')) {
+      $uid = !empty($_GET['uid']) ? $_GET['uid'] : '';
+    }
+
+    if (!$this->user = $user->load($uid)) {
       return false;
     }
 

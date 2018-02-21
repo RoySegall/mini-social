@@ -15,7 +15,7 @@ class AppComponent extends Component {
       return <Login />;
     }
     else {
-      return <Homepage />;
+      return <Homepage uid={window.localStorage.getItem('uid')} />;
     }
   }
 }
