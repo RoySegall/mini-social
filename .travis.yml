@@ -1,7 +1,8 @@
 language: php
-php: 7.0
+php: 7.1
 
 script:
   - cd server
   - composer install --dev
+  - php console.php social:install
   - bash tests.sh
