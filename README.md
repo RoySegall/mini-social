@@ -39,7 +39,7 @@ php -S localhost:8081
 
 That's it. Now you can enjoy with a slice of :pizza: and :pineapple:
 
-## Tests
+### Tests
 
 In order to run tests you'll need phpunit:
 ```php
@@ -50,3 +50,26 @@ Running the tests is easy:
 ```bash
 bash tests.php
 ```
+
+## Frontend
+
+Well, though the backend is awesome the front is what matter.
+
+```bash
+cd mini-social
+yarn # or npm install
+```
+
+This might take a while. After the installation has accomplished run:
+```bash
+yarn start
+```
+
+That's it.
+
+The list of users is in `server/migratoins.yml`
+
+_Optional:_ By default, the backend run at http://localhost:8081 you can change
+the address of the backend in `src/settings.php`
+
+
