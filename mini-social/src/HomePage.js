@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './Homepage.css';
 import settings from './settings';
+import * as axios from "axios";
 
 class Login extends React.Component {
 
@@ -8,13 +9,23 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      results: <h2>Hello there! Please do something with the buttons on the
-        left.</h2>
+      results: <h2>Hello there! Please do something with the buttons on the left.</h2>
     };
   }
 
   showAllFriends() {
     let friends = ['Roy', 'Roy', 'John'];
+
+    axios({
+      method: 'get',
+    })
+    .then((response) => {
+
+    })
+    .catch((error) => {
+
+    });
+
     this.setState({
       results: <ul>{friends.map((item) => <li>{item}</li>)}</ul>
     });
