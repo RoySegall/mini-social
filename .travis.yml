@@ -2,4 +2,6 @@ language: php
 php: 7.0
 
 script:
-  - composer 
+  - cd server
+  - composer install --dev
+  - bash tests.sh
