@@ -38,7 +38,7 @@ class Login extends Component {
 
         <div className="actions">
           <button className="push_button blue"
-                  onClick={(event) => this.handleClick(event, this)}>Log me in Scotty
+                  onClick={() => this.handleClick()}>Log me in Scotty
           </button>
         </div>
 
@@ -46,7 +46,7 @@ class Login extends Component {
     );
   }
 
-  handleClick(event, obj) {
+  handleClick() {
     // Reset the errors.
     let errors = [];
 
@@ -58,21 +58,27 @@ class Login extends Component {
       errors.push('The password is required');
     }
 
-    if (errors.length == 0) {
+    if (errors.length === 0) {
+      let self = this;
+
       axios.post(settings.backend + "/login",
         "username=" + this.state.username + "&password=" + this.state.password)
-        .then(function(response) {
+        .then(function (response) {
           window.localStorage.setItem('uid', response.data.id);
           window.location.reload();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           if (error.response !== undefined) {
-            obj.setState({errors: error.response.data.error});
+            self.setState({
+              errors: error.response.data.error
+            });
           }
         });
     }
 
-    obj.setState({errors: errors.join(", ")});
+    this.setState({
+      errors: errors.join(", ")
+    });
   }
 }
 

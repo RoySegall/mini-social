@@ -1,0 +1,22 @@
+.first {
+    width: 25%;
+    display: inline-block;
+}
+
+.last {
+    width: 75%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+button.actions {
+    display: block;
+    margin-bottom: 1em;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
