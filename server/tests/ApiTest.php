@@ -4,6 +4,7 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Social\Controller\Login;
+use Social\ControllerBase;
 use Social\Entity\User;
 use Social\Social;
 
@@ -38,6 +39,27 @@ class ApiTest extends TestCase {
   }
 
   /**
+   * Asserting request easilly.
+   *
+   * @param array $response
+   *   The array which will be assert against the request.
+   * @param ControllerBase $request
+   *   The controller to validate.
+   * @param callable|NULL $assert
+   *   Custom callback to validate.
+   */
+  protected function assertResponse(array $response, ControllerBase $request, callable $assert = NULL) {
+    $result = json_decode($request->responseWrapper()->getContent());
+
+    if ($assert) {
+      $assert($result);
+      return;
+    }
+
+    $this->assertEquals($response, (array) $result);
+  }
+
+  /**
    * Testing the api.
    *
    * @throws \Exception
@@ -45,18 +67,20 @@ class ApiTest extends TestCase {
   public function testLogin() {
     $login = new Login();
 
-    $result = json_decode($login->responseWrapper()->getContent());
-    $this->assertEquals(['error' => 'username and password are missing'], (array) $result);
+    $this->assertResponse(['error' => 'username and password are missing'], $login);
+    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
+      'username' => 'test',
+      'password' => 'test',
+    ]));
 
-    $login->setPayload((object) ['username' => 'test', 'password' => 'test']);
+    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
+      'username' => 'test',
+      'password' => 'test',
+    ]));
 
-    $result = json_decode($login->responseWrapper()->getContent());
-    $this->assertEquals(['error' => 'No username was found. Try again later.'], (array) $result);
-
-    $login->setPayload((object) ['username' => 'rick', 'password' => 'rick']);
-
-    $result = json_decode($login->responseWrapper()->getContent());
-    $this->assertEquals($this->loadRick()['id'], $result->id);
+    $this->assertResponse([], $login->setPayload(['username' => 'rick', 'password' => 'rick']), function($result) {
+      $this->assertEquals($this->loadRick()['id'], $result->id);
+    });
   }
 
 }

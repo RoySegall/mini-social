@@ -54,11 +54,15 @@ abstract class ControllerBase {
   /**
    * Set the payload.
    *
-   * @param \stdClass $payload
+   * @param array $payload
    *   The object.
+   *
+   * @return ControllerBase
    */
-  public function setPayload(\stdClass $payload) {
-    $this->payload = $payload;
+  public function setPayload(array $payload) {
+    $this->payload = (object) $payload;
+
+    return $this;
   }
 
   /**
