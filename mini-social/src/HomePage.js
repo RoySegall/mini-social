@@ -15,52 +15,67 @@ class Login extends React.Component {
         };
     }
 
-    showAllFriends() {
+    /**
+     * Process results from the DB.
+     *
+     * @param url
+     *  The address of the url.
+     */
+    processUsers(url) {
         let friends = [];
         var self = this;
 
-        axios.get(settings.backend + '/friends/show/all?uid=' + this.state.uid)
+        axios.get(settings.backend + '/' + url + '?uid=' + this.state.uid)
             .then((response) => {
-
-                response.data.forEach((item) => {
-                    friends.push(item);
-                });
+                if (typeof response.data === 'object') {
+                    Object.keys(response.data).forEach((item) => {
+                        friends.push(response.data[item]);
+                    });
+                }
+                else {
+                    response.data.map((item) => {
+                        friends.push(item);
+                    });
+                }
 
                 self.setState({
                     results: <ul>{friends.map((item) => <li><User obj={item} currentUid={this.state.uid}/></li>)}</ul>
                 });
-            })
-            .catch((error) => {
-
             });
     }
 
+    /**
+     * Get all the friends.
+     */
+    showAllFriends() {
+        this.processUsers('friends/show/all');
+    }
+
+    /**
+     * Get friends with the nearest birthday.
+     */
     showBirthdays() {
-        let friends = ['Noy'];
-        this.setState({
-            results: <ul>{friends.map((item) => <li>{item}</li>)}</ul>
-        });
+        this.processUsers('friends/show/birthdates');
     }
 
+    /**
+     * Get the potentials friends.
+     */
     showPotentialFriends() {
-        let friends = ['Donald'];
-        this.setState({
-            results: <ul>{friends.map((item) => <li>{item}</li>)}</ul>
-        });
+        this.processUsers('friends/show/potentials');
     }
 
+    /**
+     * Get all the members which have an upcoming birthday.
+     */
     showUpcomingBirthdays() {
-        let friends = ['Rick'];
-        this.setState({
-            results: <ul>{friends.map((item) => <li>{item}</li>)}</ul>
-        });
+        this.processUsers('friends/show/birthdays/upcoming');
     }
 
     render() {
         return (
             <div className="Homepage">
                 <div className="first">
-                    {/*<button className="actions" onClick={this.showAllFriends(this)}>Show all friends</button>*/}
                     <button className="actions" onClick={() => this.showAllFriends()}>Show
                         all friends
                     </button>
