@@ -4,9 +4,11 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Social\Controller\AllFriends;
+use Social\Controller\Index;
 use Social\Controller\Login;
 use Social\Controller\ShowBirthdates;
 use Social\Controller\ShowPotentials;
+use Social\Controller\ShowUpcomingBirthdates;
 use Social\ControllerBase;
 use Social\Entity\User;
 use Social\Social;
@@ -149,6 +151,47 @@ class ApiTest extends TestCase {
       $this->assertTrue(in_array('tim', $friends));
       $this->assertTrue(in_array('steve', $friends));
     });
+  }
+
+  /**
+   * Making sure we got the potentials friends.
+   */
+  public function testUpComingBirthdates() {
+    $birthdates = new ShowUpcomingBirthdates();
+
+    $this->assertResponse([], $birthdates->setUid($this->loadRick()['id']), function($result) {
+      $result = (array)$result;
+
+      $this->assertCount(14, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+
+      $this->assertTrue(in_array('alice', $friends));
+      $this->assertTrue(in_array('malania', $friends));
+      $this->assertTrue(in_array('mr.misix', $friends));
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('beth', $friends));
+      $this->assertTrue(in_array('sting', $friends));
+      $this->assertTrue(in_array('morty', $friends));
+      $this->assertTrue(in_array('jarrad', $friends));
+      $this->assertTrue(in_array('summer', $friends));
+      $this->assertTrue(in_array('steve', $friends));
+      $this->assertTrue(in_array('tim', $friends));
+      $this->assertTrue(in_array('ivanka', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Making sure the user object is return when accessing the index route.
+   */
+  public function testIndex() {
+    $index = new Index();
+    $this->assertResponse($this->loadRick(), $index->setUid($this->loadRick()['id']));
   }
 
 }
