@@ -45,10 +45,21 @@ abstract class ControllerBase {
   }
 
   /**
+   * Set the user ID fo the user.
+   *
    * @param string $uid
+   *   The user ID.
+   *
+   * @return ControllerBase
    */
   public function setUid($uid) {
     $this->uid = $uid;
+
+    if (!$this->user) {
+      $this->getCurrentUser();
+    }
+
+    return $this;
   }
 
   /**
@@ -130,8 +141,13 @@ abstract class ControllerBase {
   protected function getCurrentUser() {
     $user = new User();
 
-    if (!$uid = $this->request->headers->get('uid')) {
-      $uid = !empty($_GET['uid']) ? $_GET['uid'] : '';
+    if ($this->uid) {
+      $uid = $this->uid;
+    }
+    else {
+      if (!$uid = $this->request->headers->get('uid')) {
+        $uid = !empty($_GET['uid']) ? $_GET['uid'] : '';
+      }
     }
 
     if (!$this->user = $user->load($uid)) {

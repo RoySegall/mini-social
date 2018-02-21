@@ -3,6 +3,7 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
+use Social\Controller\AllFriends;
 use Social\Controller\Login;
 use Social\ControllerBase;
 use Social\Entity\User;
@@ -60,7 +61,7 @@ class ApiTest extends TestCase {
   }
 
   /**
-   * Testing the api.
+   * Testing login API.
    *
    * @throws \Exception
    */
@@ -80,6 +81,27 @@ class ApiTest extends TestCase {
 
     $this->assertResponse([], $login->setPayload(['username' => 'rick', 'password' => 'rick']), function($result) {
       $this->assertEquals($this->loadRick()['id'], $result->id);
+    });
+  }
+
+  /**
+   * Making sure we are getting the right friends.
+   */
+  public function testAllFriend() {
+    $allFriends = new AllFriends();
+
+    $this->assertResponse([], $allFriends->setUid($this->loadRick()['id']), function($result) {
+      $this->assertCount(5, $result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('morty', $friends));
+      $this->assertTrue(in_array('alice', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
     });
   }
 
