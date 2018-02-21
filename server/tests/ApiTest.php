@@ -3,6 +3,7 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\CodeCoverage\Node\File;
 use Social\Controller\AddFriend;
 use Social\Controller\AllFriends;
 use Social\Controller\Index;
@@ -13,6 +14,7 @@ use Social\Controller\ShowUpcomingBirthdates;
 use Social\ControllerBase;
 use Social\Entity\User;
 use Social\Social;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ApiTest extends TestCase {
 
@@ -71,135 +73,135 @@ class ApiTest extends TestCase {
     $this->assertEquals($response, (array) $result);
   }
 
-//  /**
-//   * Testing login API.
-//   *
-//   * @throws \Exception
-//   */
-//  public function testLogin() {
-//    $login = new Login();
-//
-//    $this->assertResponse(['error' => 'username and password are missing'], $login);
-//    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
-//      'username' => 'test',
-//      'password' => 'test',
-//    ]));
-//
-//    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
-//      'username' => 'test',
-//      'password' => 'test',
-//    ]));
-//
-//    $this->assertResponse([], $login->setPayload(['username' => 'rick', 'password' => 'rick']), function($result) {
-//      $this->assertEquals($this->loadUser()['id'], $result->id);
-//    });
-//  }
-//
-//  /**
-//   * Making sure we are getting the right friends.
-//   */
-//  public function testAllFriend() {
-//    $allFriends = new AllFriends();
-//
-//    $this->assertResponse([], $allFriends->setUid($this->loadUser()['id']), function($result) {
-//      $this->assertCount(5, $result);
-//
-//      $friends = array_map(function($document) {
-//        return $document->username;
-//      }, $result);
-//
-//      $this->assertTrue(in_array('admin', $friends));
-//      $this->assertTrue(in_array('morty', $friends));
-//      $this->assertTrue(in_array('alice', $friends));
-//      $this->assertTrue(in_array('jerry', $friends));
-//      $this->assertTrue(in_array('john', $friends));
-//    });
-//  }
-//
-//  /**
-//   * Testing the birthdays controller.
-//   */
-//  public function testBirthdays() {
-//    $birthdays = new ShowBirthdates();
-//    $this->assertResponse([], $birthdays->setUid($this->loadUser()['id']), function($result) {
-//
-//      $result = (array)$result;
-//
-//      $this->assertCount(3, (array)$result);
-//
-//      $friends = array_map(function($document) {
-//        return $document->username;
-//      }, $result);
-//
-//      $this->assertTrue(in_array('admin', $friends));
-//      $this->assertTrue(in_array('jerry', $friends));
-//      $this->assertTrue(in_array('john', $friends));
-//    });
-//  }
-//
-//  /**
-//   * Making sure we got the potentials friends.
-//   */
-//  public function testPotentialsFriends() {
-//    $potenials = new ShowPotentials();
-//
-//    $this->assertResponse([], $potenials->setUid($this->loadUser()['id']), function($result) {
-//
-//      $result = (array)$result;
-//
-//      $this->assertCount(4, (array)$result);
-//
-//      $friends = array_map(function($document) {
-//        return $document->username;
-//      }, $result);
-//
-//      $this->assertTrue(in_array('ivanka', $friends));
-//      $this->assertTrue(in_array('malania', $friends));
-//      $this->assertTrue(in_array('tim', $friends));
-//      $this->assertTrue(in_array('steve', $friends));
-//    });
-//  }
-//
-//  /**
-//   * Making sure we got the potentials friends.
-//   */
-//  public function testUpComingBirthdates() {
-//    $birthdates = new ShowUpcomingBirthdates();
-//
-//    $this->assertResponse([], $birthdates->setUid($this->loadUser()['id']), function($result) {
-//      $result = (array)$result;
-//
-//      $this->assertCount(14, (array)$result);
-//
-//      $friends = array_map(function($document) {
-//        return $document->username;
-//      }, $result);
-//
-//
-//      $this->assertTrue(in_array('alice', $friends));
-//      $this->assertTrue(in_array('malania', $friends));
-//      $this->assertTrue(in_array('mr.misix', $friends));
-//      $this->assertTrue(in_array('admin', $friends));
-//      $this->assertTrue(in_array('beth', $friends));
-//      $this->assertTrue(in_array('sting', $friends));
-//      $this->assertTrue(in_array('morty', $friends));
-//      $this->assertTrue(in_array('jarrad', $friends));
-//      $this->assertTrue(in_array('summer', $friends));
-//      $this->assertTrue(in_array('steve', $friends));
-//      $this->assertTrue(in_array('tim', $friends));
-//      $this->assertTrue(in_array('ivanka', $friends));
-//      $this->assertTrue(in_array('jerry', $friends));
-//      $this->assertTrue(in_array('john', $friends));
-//    });
-//  }
-//
-//  /**
-//   * Making sure the user object is return when accessing the index route.
-//   */
-//  public function testIndex() {
-//    $index = new Index();
-//    $this->assertResponse($this->loadUser(), $index->setUid($this->loadUser()['id']));
-//  }
+  /**
+   * Testing login API.
+   *
+   * @throws \Exception
+   */
+  public function testLogin() {
+    $login = new Login();
+
+    $this->assertResponse(['error' => 'username and password are missing'], $login);
+    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
+      'username' => 'test',
+      'password' => 'test',
+    ]));
+
+    $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
+      'username' => 'test',
+      'password' => 'test',
+    ]));
+
+    $this->assertResponse([], $login->setPayload(['username' => 'rick', 'password' => 'rick']), function($result) {
+      $this->assertEquals($this->loadUser()['id'], $result->id);
+    });
+  }
+
+  /**
+   * Making sure we are getting the right friends.
+   */
+  public function testAllFriend() {
+    $allFriends = new AllFriends();
+
+    $this->assertResponse([], $allFriends->setUid($this->loadUser()['id']), function($result) {
+      $this->assertCount(5, $result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('morty', $friends));
+      $this->assertTrue(in_array('alice', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Testing the birthdays controller.
+   */
+  public function testBirthdays() {
+    $birthdays = new ShowBirthdates();
+    $this->assertResponse([], $birthdays->setUid($this->loadUser()['id']), function($result) {
+
+      $result = (array)$result;
+
+      $this->assertCount(3, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Making sure we got the potentials friends.
+   */
+  public function testPotentialsFriends() {
+    $potenials = new ShowPotentials();
+
+    $this->assertResponse([], $potenials->setUid($this->loadUser()['id']), function($result) {
+
+      $result = (array)$result;
+
+      $this->assertCount(4, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('ivanka', $friends));
+      $this->assertTrue(in_array('malania', $friends));
+      $this->assertTrue(in_array('tim', $friends));
+      $this->assertTrue(in_array('steve', $friends));
+    });
+  }
+
+  /**
+   * Making sure we got the potentials friends.
+   */
+  public function testUpComingBirthdates() {
+    $birthdates = new ShowUpcomingBirthdates();
+
+    $this->assertResponse([], $birthdates->setUid($this->loadUser()['id']), function($result) {
+      $result = (array)$result;
+
+      $this->assertCount(14, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+
+      $this->assertTrue(in_array('alice', $friends));
+      $this->assertTrue(in_array('malania', $friends));
+      $this->assertTrue(in_array('mr.misix', $friends));
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('beth', $friends));
+      $this->assertTrue(in_array('sting', $friends));
+      $this->assertTrue(in_array('morty', $friends));
+      $this->assertTrue(in_array('jarrad', $friends));
+      $this->assertTrue(in_array('summer', $friends));
+      $this->assertTrue(in_array('steve', $friends));
+      $this->assertTrue(in_array('tim', $friends));
+      $this->assertTrue(in_array('ivanka', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Making sure the user object is return when accessing the index route.
+   */
+  public function testIndex() {
+    $index = new Index();
+    $this->assertResponse($this->loadUser(), $index->setUid($this->loadUser()['id']));
+  }
 
   /**
    * Testing the adding friend controller.
@@ -226,6 +228,28 @@ class ApiTest extends TestCase {
 
     $this->assertNotEquals($rick['friends']->offsetGet(1), $first_friend);
     $this->assertEquals(end($new_friends), $malania['id']);
+  }
+
+  /**
+   * Testing there the attempts login feature.
+   */
+  public function testingBadLoginAttempts() {
+    $login = new Login();
+    $fs = new Filesystem();
+
+    $fs->remove('failed_logs.log');
+
+    for ($i = 0; $i < 5; $i++) {
+
+      $this->assertResponse(['error' => 'No username was found. Try again later.'], $login->setPayload([
+        'username' => 'test',
+        'password' => 'test',
+      ]));
+
+      if ($i == 4) {
+        \Kint::dump($fs->exists('failed_logs.log'));
+      }
+    }
   }
 
 }
