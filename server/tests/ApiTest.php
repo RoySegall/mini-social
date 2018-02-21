@@ -247,7 +247,7 @@ class ApiTest extends TestCase {
       ]));
 
       if ($i == 4) {
-        \Kint::dump($fs->exists('failed_logs.log'));
+        $this->assertTrue($fs->exists('failed_logs.log'));
       }
     }
   }
