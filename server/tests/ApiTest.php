@@ -3,7 +3,6 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\CodeCoverage\Node\File;
 use Social\Controller\AddFriend;
 use Social\Controller\AllFriends;
 use Social\Controller\Index;
