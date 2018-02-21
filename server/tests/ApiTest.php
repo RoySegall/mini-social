@@ -5,6 +5,8 @@ namespace tests;
 use PHPUnit\Framework\TestCase;
 use Social\Controller\AllFriends;
 use Social\Controller\Login;
+use Social\Controller\ShowBirthdates;
+use Social\Controller\ShowPotentials;
 use Social\ControllerBase;
 use Social\Entity\User;
 use Social\Social;
@@ -102,6 +104,50 @@ class ApiTest extends TestCase {
       $this->assertTrue(in_array('alice', $friends));
       $this->assertTrue(in_array('jerry', $friends));
       $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Testing the birthdays controller.
+   */
+  public function testBirthdays() {
+    $birthdays = new ShowBirthdates();
+    $this->assertResponse([], $birthdays->setUid($this->loadRick()['id']), function($result) {
+
+      $result = (array)$result;
+
+      $this->assertCount(3, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('admin', $friends));
+      $this->assertTrue(in_array('jerry', $friends));
+      $this->assertTrue(in_array('john', $friends));
+    });
+  }
+
+  /**
+   * Making sure we got the potentials friends.
+   */
+  public function testPotentialsFriends() {
+    $potenials = new ShowPotentials();
+
+    $this->assertResponse([], $potenials->setUid($this->loadRick()['id']), function($result) {
+
+      $result = (array)$result;
+
+      $this->assertCount(4, (array)$result);
+
+      $friends = array_map(function($document) {
+        return $document->username;
+      }, $result);
+
+      $this->assertTrue(in_array('ivanka', $friends));
+      $this->assertTrue(in_array('malania', $friends));
+      $this->assertTrue(in_array('tim', $friends));
+      $this->assertTrue(in_array('steve', $friends));
     });
   }
 
